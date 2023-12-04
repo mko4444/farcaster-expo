@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".", // This should be set to enable path aliases
     "strict": true,
-    "skipLibCheck": true
+    "types": ["node"],
+    "paths": {
+      "@/*": ["./*"] // General alias for the root directory
+    }
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "exclude": ["node_modules"]
 }

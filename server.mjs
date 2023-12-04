@@ -11,7 +11,7 @@ const client = new NeynarAPIClient(process.env.NEYNAR_KEY ?? "undefined");
 app.get("/feed/", async (req, res) => {
   const feed = await client.fetchFeed(FeedType.Filter, {
     filterType: FilterType.GlobalTrending,
-    cursor: req.query.cursor as string,
+    cursor: req.query.cursor,
   });
   return res.send(feed);
 });

@@ -4,15 +4,14 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
-    "server": "npx ts-node server.ts"
+    "server": "node server.mjs",
+    "ts:check": "tsc"
   },
   "dependencies": {
     "@neynar/nodejs-sdk": "^1.1.0",
-    "@radix-ui/react-avatar": "^1.0.4",
-    "@radix-ui/themes": "^2.0.1",
     "@types/react": "~18.2.14",
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
@@ -20,6 +19,7 @@
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "express": "^4.18.2",
     "react": "18.2.0",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/escape-string-regexp": "^2.0.1",
     "@types/express": "^4.17.21",
     "ts-node": "^10.9.1"
   },
