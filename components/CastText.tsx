@@ -11,13 +11,13 @@ export function CastText({ text }: CastTextProps) {
 
 const styles = StyleSheet.create({
   links: {
-    color: "#472A91",
+    color: "#8D60FF",
     fontWeight: "500",
   },
   text: {
     marginTop: 8,
     marginBottom: 4,
-    color: "white",
+    color: "#ffffff",
     fontSize: 15,
     lineHeight: 20,
   },

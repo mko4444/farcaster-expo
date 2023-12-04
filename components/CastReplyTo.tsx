@@ -1,13 +1,13 @@
 import { Text, StyleSheet } from "react-native";
 
-export function CastReplyTo({ username }: CastReplyToProps) {
+export function CastReplyTo({ username, fid }: CastReplyToProps) {
   if (!username) return null;
 
   return (
-    username && (
+    (username || fid) && (
       <Text style={styles.container}>
         <Text style={styles.text}>Replying to </Text>
-        <Text style={styles.link}>{username}</Text>
+        <Text style={styles.link}>{username ? `@${username}` : fid}</Text>
       </Text>
     )
   );
@@ -15,8 +15,9 @@ export function CastReplyTo({ username }: CastReplyToProps) {
 
 const styles = StyleSheet.create({
   container: {
-    fontWeight: "500",
+    fontWeight: "400",
     fontSize: 15,
+    marginTop: 2,
   },
   text: {
     color: "white",
@@ -29,5 +30,6 @@ const styles = StyleSheet.create({
 });
 
 export interface CastReplyToProps {
-  username: string;
+  username?: string;
+  fid?: string;
 }

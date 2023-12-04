@@ -7,6 +7,7 @@ import { CastText } from "./CastText";
 import { layouts } from "../styles";
 import { Link } from "expo-router";
 import { CastDetails } from "./CastDetails";
+import { useMemo } from "react";
 
 export default function Cast({
   parent_author,
@@ -21,37 +22,42 @@ export default function Cast({
   show_rail,
   no_border,
   embeds,
+  no_top_padding,
 }: CastProps) {
   const num_likes = (reactions?.count || reactions?.likes?.length) ?? 0;
   const num_recasts = (recasts?.count || reactions?.recasts?.length) ?? 0;
   const num_replies = replies?.count ?? 0;
   const reaction_props = { num_likes, num_recasts, num_replies };
 
-  return (
-    <Link href={{ pathname: "/cast/[hash]", params: { hash } }} style={styles.cast_link}>
-      <View
-        style={{
-          ...styles.cast_container,
-          borderBottomColor: no_border ? "transparent" : "#efefef15",
-        }}
-      >
-        <View style={layouts.col_fs_c}>
-          <Image source={{ uri: author?.pfp_url ?? author?.pfp?.url }} style={styles.author_image} />
-          {show_rail && <View style={styles.rail} />}
+  return useMemo(
+    () => (
+      <Link href={{ pathname: "/cast/[hash]", params: { hash } }} style={styles.cast_link}>
+        <View
+          style={{
+            ...styles.cast_container,
+            paddingTop: no_top_padding ? 0 : undefined,
+            borderBottomColor: no_border ? "transparent" : "#efefef15",
+          }}
+        >
+          <View style={layouts.col_fs_c}>
+            <Image source={{ uri: author?.pfp_url ?? author?.pfp?.url }} style={styles.author_image} />
+            {show_rail && <View style={styles.rail} />}
+          </View>
+          <View style={styles.content_container}>
+            <CastDetails
+              name={author?.display_name ?? author?.displayName}
+              username={author?.username}
+              timestamp={getRelativeTime(timestamp)}
+            />
+            <CastReplyTo username={parent_author?.username} fid={parent_author?.fid ?? parent_author?.id} />
+            <CastText text={text} />
+            <CastEmbeds embeds={embeds} />
+            {!hide_reactions ? <Reactions {...reaction_props} /> : undefined}
+          </View>
         </View>
-        <View style={styles.content_container}>
-          <CastDetails
-            name={author?.display_name ?? author?.displayName}
-            username={author?.username}
-            timestamp={getRelativeTime(timestamp)}
-          />
-          <CastReplyTo username={parent_author?.username} />
-          <CastText text={text} />
-          <CastEmbeds embeds={embeds} />
-          {!hide_reactions ? <Reactions {...reaction_props} /> : <View style={{ height: 0 }} />}
-        </View>
-      </View>
-    </Link>
+      </Link>
+    ),
+    [hash]
   );
 }
 
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
   },
   content_container: {
     ...layouts.col,
-    gap: 4,
+    gap: 0,
     flex: 1,
   },
   authorName: {
@@ -112,4 +118,5 @@ export interface CastProps {
   show_rail?: boolean;
   no_border?: boolean;
   embeds?: any;
+  no_top_padding?: boolean;
 }
